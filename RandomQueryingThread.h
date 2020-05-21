@@ -1241,7 +1241,21 @@ public:
                 current_query_threads=(current_query_threads+1)%num_threads_query;
 //                cout<<"query assign cost: "<<clock()-start_1<<endl;
             }
-
+            if (i%1000 == 0)
+            {
+                cout<<endl<<"i:"<<i<<endl;
+                for(int z = 0;z < num_threads_query;z++)
+                {
+                    for(int q_id = 0;q_id <num_threads_update;q_id++)
+                    {
+                        int pool_index=z * num_threads_update + q_id;
+                        int num_queries = _pool[pool_index]->get_num_queries_in_queue();
+                        int num_inserts = _pool[pool_index]->get_num_inserts_in_queue();
+                        int num_deletes = _pool[pool_index]->get_num_deletes_in_queue();
+                        cout<<"query:"<<z<<" update:"<<q_id<<" queries:"<<num_queries<<" inserts:"<<num_inserts<<" deletes:"<<num_deletes<<endl;
+                    }
+                }
+            }
         }
         while(globalThreadVar[0]->number_of_queries<2){
             std::this_thread::sleep_for(std::chrono::microseconds(1));
