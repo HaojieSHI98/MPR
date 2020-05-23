@@ -435,11 +435,12 @@ public:
                             estimate_mutex.unlock();
 
                         }
-
+                        cout<<"kNNs query start! ";
                         kNNs = HandleQuery(copy_id, thread_id, multiTestPara.method_name, k, _taskid.first, mems.dist,
                                            mems.visited, mems.q,
                                            dijkstra_object_map, globalThreadVar[copy_id]->ran_threshold, query_id,
                                            hier_local_knn_arr_single);
+                        cout<<" kNNs query stop!"<<endl;
                         if(can_estimate) {
                             gettimeofday(&end, NULL);
                         }
@@ -509,10 +510,11 @@ public:
                         estimate_mutex.unlock();
 
                     }
-
+                    cout<<"Insert start! ";
                     HandleInsert(copy_id, thread_id, multiTestPara.method_name, k, _taskid.first, dijkstra_object_map,
                                  mems,
                                  hier_local_knn_arr_single);
+                    cout<<"Insert stop! "<<endl;
                     if(can_estimate) {
                         gettimeofday(&end, NULL);
                     }
@@ -553,8 +555,10 @@ public:
                         estimate_mutex.unlock();
 
                     }
+                    cout<<"Delete start! ";
                     HandleDelete(copy_id, thread_id, multiTestPara.method_name, k, _taskid.first, dijkstra_object_map,
                                  mems, hier_local_knn_arr_single);
+                    cout<<"Delete stop! ";
                     if(can_estimate) {
                         gettimeofday(&end, NULL);
                     }
