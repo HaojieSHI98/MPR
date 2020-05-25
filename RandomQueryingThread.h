@@ -408,11 +408,11 @@ public:
 //                long _task_time = _task_cache_array[_task_index].first;
 //                _task_index++;
 
-
+                cout<<"task start! ";
                 if (_taskid.second == QUERY) {
 //                    cout<<"start querying..."<<endl;
 //                    cout<<"query"<<endl;
-                    cout<<"kNNs query start! ";
+//                    cout<<"kNNs query start! ";
                     long start = clock();
                     vector<KNode> kNNs;
 
@@ -497,7 +497,7 @@ public:
 //                    cout<<"aggregate task added!"<<endl;
 
                     // put partial querying result to somewhere
-                    cout<<" kNNs query stop!"<<endl;
+//                    cout<<" kNNs query stop!"<<endl;
                 }
 //                cout<<"method name: "<<multiTestPara.method_name<<endl;
                 if (_taskid.second == INSERT) {
@@ -590,7 +590,7 @@ public:
 //                    cout<<"Delete stop! ";
 
                 }
-
+                cout<<"task stop!"<<endl;
                 thread_mutex.lock();
                 if(_taskid.second == QUERY){
                     num_queries_in_queue--;
