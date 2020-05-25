@@ -1152,9 +1152,9 @@ public:
                 }
                 if(VERIFY){
 //                    car_nodes[non_object_node]=1;
-                    cout<<" insert "
+                    cout<<" insert ";
                     DijkstraKNNInsert(non_object_node, car_nodes);
-                    cout<<" /insert "
+                    cout<<" /insert ";
                 }
 //                cout<<"insert assign cost : "<<clock()-start_1<<endl;
 //                cout<<"end insert"<<endl;
