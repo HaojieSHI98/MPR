@@ -436,12 +436,12 @@ public:
                             estimate_mutex.unlock();
 
                         }
-                        cout<<"kNNs queryss start! ";
+//                        cout<<"kNNs queryss start! ";
                         kNNs = HandleQuery(copy_id, thread_id, multiTestPara.method_name, k, _taskid.first, mems.dist,
                                            mems.visited, mems.q,
                                            dijkstra_object_map, globalThreadVar[copy_id]->ran_threshold, query_id,
                                            hier_local_knn_arr_single);
-                        cout<<" kNNs queryss stop!"<<endl;
+//                        cout<<" kNNs queryss stop!"<<endl;
                         if(can_estimate) {
                             gettimeofday(&end, NULL);
                         }
@@ -502,7 +502,7 @@ public:
 //                cout<<"method name: "<<multiTestPara.method_name<<endl;
                 if (_taskid.second == INSERT) {
 //                    cout<<"insert "<<_taskid.first<<endl;
-                    cout<<"Insert start! ";
+//                    cout<<"Insert start! ";
                     if(can_estimate) {
                         gettimeofday(&init, NULL);
                     }
@@ -542,11 +542,11 @@ public:
                         }
 //                        last_insert_cost = processing_time;
                     }
-                    cout<<"Insert stop! "<<endl;
+//                    cout<<"Insert stop! "<<endl;
 
                 }
                 if (_taskid.second == DELETE) {
-                    cout<<"Delete start! ";
+//                    cout<<"Delete start! ";
 //                    cout<<"delete "<<_taskid.first<<endl;//
 
                     if(can_estimate) {
@@ -587,7 +587,7 @@ public:
                         // need lock
 //                        last_delete_cost = processing_time;
                     }
-                    cout<<"Delete stop! ";
+//                    cout<<"Delete stop! ";
 
                 }
 
@@ -1249,21 +1249,21 @@ public:
                 current_query_threads=(current_query_threads+1)%num_threads_query;
 //                cout<<"query assign cost: "<<clock()-start_1<<endl;
             }
-            if (i%1000 == 0)
-            {
-                cout<<endl<<"i:"<<i<<endl;
-                for(int z = 0;z < num_threads_query;z++)
-                {
-                    for(int q_id = 0;q_id <num_threads_update;q_id++)
-                    {
-                        int pool_index=z * num_threads_update + q_id;
-                        int num_queries = _pool[pool_index]->get_num_queries_in_queue();
-                        int num_inserts = _pool[pool_index]->get_num_inserts_in_queue();
-                        int num_deletes = _pool[pool_index]->get_num_deletes_in_queue();
-                        cout<<"query:"<<z<<" update:"<<q_id<<" queries:"<<num_queries<<" inserts:"<<num_inserts<<" deletes:"<<num_deletes<<endl;
-                    }
-                }
-            }
+//            if (i%1000 == 0)
+//            {
+//                cout<<endl<<"i:"<<i<<endl;
+//                for(int z = 0;z < num_threads_query;z++)
+//                {
+//                    for(int q_id = 0;q_id <num_threads_update;q_id++)
+//                    {
+//                        int pool_index=z * num_threads_update + q_id;
+//                        int num_queries = _pool[pool_index]->get_num_queries_in_queue();
+//                        int num_inserts = _pool[pool_index]->get_num_inserts_in_queue();
+//                        int num_deletes = _pool[pool_index]->get_num_deletes_in_queue();
+//                        cout<<"query:"<<z<<" update:"<<q_id<<" queries:"<<num_queries<<" inserts:"<<num_inserts<<" deletes:"<<num_deletes<<endl;
+//                    }
+//                }
+//            }
         }
         while(globalThreadVar[0]->number_of_queries<2){
             std::this_thread::sleep_for(std::chrono::microseconds(1));
