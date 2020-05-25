@@ -361,6 +361,7 @@ public:
         timeval init;
         timeval end;
         while (true) {
+            cout<<"task start! ";
             if(overload_flag) {
                 break;
             }
@@ -408,7 +409,7 @@ public:
 //                long _task_time = _task_cache_array[_task_index].first;
 //                _task_index++;
 
-                cout<<"task start! ";
+//                cout<<"task start! ";
                 if (_taskid.second == QUERY) {
 //                    cout<<"start querying..."<<endl;
 //                    cout<<"query"<<endl;
@@ -590,7 +591,7 @@ public:
 //                    cout<<"Delete stop! ";
 
                 }
-                cout<<"task stop!"<<endl;
+//                cout<<"task stop!"<<endl;
                 thread_mutex.lock();
                 if(_taskid.second == QUERY){
                     num_queries_in_queue--;
@@ -648,7 +649,7 @@ public:
 
                 break;
             }
-
+            cout<<"task stop! ";
         }
 //        cout << endl << endl << "out 2" << endl;
     }
