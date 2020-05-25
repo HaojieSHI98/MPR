@@ -1218,11 +1218,11 @@ public:
                 }
 
                 if(VERIFY){
-                    cout<<" query "
+                    cout<<" query ";
                     vector<KNode> result = DijkstraKNNQuery(k, query_node, mems.dist,
                                                             mems.visited, mems.q, car_nodes);
                     verify_results.push_back(result);
-                    cout<<" /query "
+                    cout<<" /query ";
                 }
                 // put to query tasks
 //                gettimeofday(&end, NULL);
