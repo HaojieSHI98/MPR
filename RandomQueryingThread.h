@@ -412,7 +412,7 @@ public:
                 if (_taskid.second == QUERY) {
 //                    cout<<"start querying..."<<endl;
 //                    cout<<"query"<<endl;
-                    cout<<"kNNs query start! ";
+//                    cout<<"kNNs query start! ";
                     long start = clock();
                     vector<KNode> kNNs;
 
@@ -497,12 +497,12 @@ public:
 //                    cout<<"aggregate task added!"<<endl;
 
                     // put partial querying result to somewhere
-                    cout<<" kNNs query stop!"<<endl;
+//                    cout<<" kNNs query stop!"<<endl;
                 }
 //                cout<<"method name: "<<multiTestPara.method_name<<endl;
                 if (_taskid.second == INSERT) {
 //                    cout<<"insert "<<_taskid.first<<endl;
-                    cout<<"Insert start! ";
+//                    cout<<"Insert start! ";
                     if(can_estimate) {
                         gettimeofday(&init, NULL);
                     }
@@ -542,11 +542,11 @@ public:
                         }
 //                        last_insert_cost = processing_time;
                     }
-                    cout<<"Insert stop! "<<endl;
+//                    cout<<"Insert stop! "<<endl;
 
                 }
                 if (_taskid.second == DELETE) {
-                    cout<<"Delete start! ";
+//                    cout<<"Delete start! ";
 //                    cout<<"delete "<<_taskid.first<<endl;//
 
                     if(can_estimate) {
@@ -587,7 +587,7 @@ public:
                         // need lock
 //                        last_delete_cost = processing_time;
                     }
-                    cout<<"Delete stop! ";
+//                    cout<<"Delete stop! ";
 
                 }
 
