@@ -361,7 +361,7 @@ public:
         timeval init;
         timeval end;
         while (true) {
-            cout<<"task start! ";
+//            cout<<"task start! ";
             if(overload_flag) {
                 break;
             }
@@ -649,7 +649,7 @@ public:
 
                 break;
             }
-            cout<<"task stop! ";
+//            cout<<"task stop! ";
         }
 //        cout << endl << endl << "out 2" << endl;
     }
@@ -1051,6 +1051,7 @@ public:
         }
 
         for (; i < full_list.size(); i++) {
+            cout<<"start ";
             if(overload_flag) break;
 //            cout<<i<<endl;
             if(arrival_nodes[i]==-1) continue;
@@ -1265,6 +1266,7 @@ public:
 //                    }
 //                }
 //            }
+            cout<<"stop!"<<endl;
         }
         while(globalThreadVar[0]->number_of_queries<2){
             std::this_thread::sleep_for(std::chrono::microseconds(1));
