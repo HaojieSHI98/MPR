@@ -361,7 +361,7 @@ public:
         timeval init;
         timeval end;
         while (true) {
-           cout<<"task start! ";
+           // cout<<"task start! ";
             if(overload_flag) {
                 break;
             }
@@ -591,7 +591,7 @@ public:
 //                    cout<<"Delete stop! ";
 
                 }
-               cout<<" task stop! "<<endl;
+               // cout<<" task stop! "<<endl;
                 thread_mutex.lock();
                 if(_taskid.second == QUERY){
                     num_queries_in_queue--;
@@ -1051,7 +1051,7 @@ public:
         }
 
         for (; i < full_list.size(); i++) {
-            // cout<<"start ";
+            cout<<"start ";
             if(overload_flag) break;
 //            cout<<i<<endl;
             if(arrival_nodes[i]==-1) continue;
@@ -1152,7 +1152,9 @@ public:
                 }
                 if(VERIFY){
 //                    car_nodes[non_object_node]=1;
+                    cout<<" insert "
                     DijkstraKNNInsert(non_object_node, car_nodes);
+                    cout<<" /insert "
                 }
 //                cout<<"insert assign cost : "<<clock()-start_1<<endl;
 //                cout<<"end insert"<<endl;
@@ -1176,7 +1178,9 @@ public:
                 }
                 if(VERIFY){
 //                    car_nodes[object_node]=0;
+                    cout<<" delete ";
                     DijkstraKNNDelete(object_node, car_nodes);
+                    cout<<" /delete ";
                 }
 
 //                cout<<"delete assign cost: "<<clock()-start_1<<endl;
@@ -1214,10 +1218,11 @@ public:
                 }
 
                 if(VERIFY){
+                    cout<<" query "
                     vector<KNode> result = DijkstraKNNQuery(k, query_node, mems.dist,
                                                             mems.visited, mems.q, car_nodes);
                     verify_results.push_back(result);
-
+                    cout<<" /query "
                 }
                 // put to query tasks
 //                gettimeofday(&end, NULL);
@@ -1266,7 +1271,7 @@ public:
 //                    }
 //                }
 //            }
-            // cout<<"stop!"<<endl;
+            cout<<"stop!"<<endl;
         }
         while(globalThreadVar[0]->number_of_queries<2){
             std::this_thread::sleep_for(std::chrono::microseconds(1));
