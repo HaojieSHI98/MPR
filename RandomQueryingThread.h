@@ -1102,7 +1102,7 @@ public:
             }
 
 
-
+            cout<<"step 1 ";
             // if insert
             if (event.second == INSERT) {
 
@@ -1158,6 +1158,7 @@ public:
 //                cout<<"end insert"<<endl;
             }
             if (event.second == DELETE) {
+                cout<<"delete 1 "
 
                 int object_node = arrival_nodes[i];
                 if(need_opt){
@@ -1178,7 +1179,7 @@ public:
 //                    car_nodes[object_node]=0;
                     DijkstraKNNDelete(object_node, car_nodes);
                 }
-
+                cout<<" deleted "
 //                cout<<"delete assign cost: "<<clock()-start_1<<endl;
 
             }
