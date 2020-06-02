@@ -395,7 +395,6 @@ public:
 //
 //            }
             if (!task_queue.empty()) {
-                cout<<"task "<<_taskid.second;
 
 //            if(!is_task_empty()){
 
@@ -406,6 +405,7 @@ public:
                 task_size--;
 
                 thread_mutex.unlock();
+                out<<"task "<<_taskid.second;
 //                pair<int, int> _taskid = _task_cache_array[_task_index].second;// extract (node, type) pair
 //                long _task_time = _task_cache_array[_task_index].first;
 //                _task_index++;
