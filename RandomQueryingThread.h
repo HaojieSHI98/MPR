@@ -1158,7 +1158,7 @@ public:
 //                cout<<"end insert"<<endl;
             }
             if (event.second == DELETE) {
-                cout<<"delete 1 "
+                cout<<"delete 1 ";
 
                 int object_node = arrival_nodes[i];
                 if(need_opt){
