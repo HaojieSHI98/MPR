@@ -1102,7 +1102,7 @@ public:
             }
 
 
-            cout<<"step 1 ";
+            cout<<"event "<<event.second;
             // if insert
             if (event.second == INSERT) {
 
@@ -1152,9 +1152,7 @@ public:
                 }
                 if(VERIFY){
 //                    car_nodes[non_object_node]=1;
-                    cout<<" insert ";
                     DijkstraKNNInsert(non_object_node, car_nodes);
-                    cout<<" /insert ";
                 }
 //                cout<<"insert assign cost : "<<clock()-start_1<<endl;
 //                cout<<"end insert"<<endl;
@@ -1179,11 +1177,9 @@ public:
                 }
                 if(VERIFY){
 //                    car_nodes[object_node]=0;
-                    cout<<" delete ";
                     DijkstraKNNDelete(object_node, car_nodes);
-                    cout<<" /delete ";
                 }
-                cout<<" deleted "
+                cout<<" deleted ";
 //                cout<<"delete assign cost: "<<clock()-start_1<<endl;
 
             }
@@ -1219,11 +1215,9 @@ public:
                 }
 
                 if(VERIFY){
-                    cout<<" query ";
                     vector<KNode> result = DijkstraKNNQuery(k, query_node, mems.dist,
                                                             mems.visited, mems.q, car_nodes);
                     verify_results.push_back(result);
-                    cout<<" /query ";
                 }
                 // put to query tasks
 //                gettimeofday(&end, NULL);
