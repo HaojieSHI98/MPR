@@ -104,7 +104,7 @@ public:
         partial_result_queue.push(partial_result);
         thread_mutex.unlock();
 //        if(is_wait)
-            cv.notify_all();
+        cv.notify_all();
 //        cout<<"aggregate task size: "<<partial_result_queue.size()<<endl;
     }
 
@@ -121,15 +121,15 @@ public:
             }
 //            if(!thread_stop)
 //             {
-                 if(!is_wait) {
-                     if (partial_result_queue.empty()) {
-                         std::unique_lock<std::mutex> aggregate_lock(thread_mutex);
+            if(!is_wait) {
+                if (partial_result_queue.empty()) {
+                    std::unique_lock<std::mutex> aggregate_lock(thread_mutex);
 //                cv.wait(aggregate_lock, []{return true;});
-                         is_wait = true;
-                         cv.wait(aggregate_lock, [this] { return !(partial_result_queue.empty()) || thread_stop; });
-                         is_wait = false;
-                     }
-                 }
+                    is_wait = true;
+                    cv.wait(aggregate_lock, [this] { return !(partial_result_queue.empty()) || thread_stop; });
+                    is_wait = false;
+                }
+            }
 
 
 //            }
@@ -337,7 +337,7 @@ public:
         thread_mutex.unlock();
 //        }
 //        if(is_wait)
-            cv.notify_all();
+        cv.notify_all();
     }
 
     void add_task_cache(pair<long, pair<int, int> > taskids) {
@@ -361,7 +361,6 @@ public:
         timeval init;
         timeval end;
         while (true) {
-           // cout<<"task start! ";
             if(overload_flag) {
                 break;
             }
@@ -369,17 +368,17 @@ public:
                 break;
             }
 //            if(!thread_stop) {
-                if(!is_wait) {
-                    if (task_queue.empty()) {
+            if(!is_wait) {
+                if (task_queue.empty()) {
 
 
-                        std::unique_lock<std::mutex> process_lock(thread_mutex);
-                        is_wait = true;
-                        cv.wait(process_lock, [this] { return !(task_queue.empty()) || thread_stop; });
+                    std::unique_lock<std::mutex> process_lock(thread_mutex);
+                    is_wait = true;
+                    cv.wait(process_lock, [this] { return !(task_queue.empty()) || thread_stop; });
 //                    cv.wait(process_lock, [this] { return true; });
-                        is_wait = false;
-                    }
+                    is_wait = false;
                 }
+            }
 
 
 //            }
@@ -409,11 +408,10 @@ public:
 //                long _task_time = _task_cache_array[_task_index].first;
 //                _task_index++;
 
-//                cout<<"task start! ";
+
                 if (_taskid.second == QUERY) {
 //                    cout<<"start querying..."<<endl;
 //                    cout<<"query"<<endl;
-//                    cout<<"kNNs query start! ";
                     long start = clock();
                     vector<KNode> kNNs;
 
@@ -437,12 +435,11 @@ public:
                             estimate_mutex.unlock();
 
                         }
-//                        cout<<"kNNs queryss start! ";
+
                         kNNs = HandleQuery(copy_id, thread_id, multiTestPara.method_name, k, _taskid.first, mems.dist,
                                            mems.visited, mems.q,
                                            dijkstra_object_map, globalThreadVar[copy_id]->ran_threshold, query_id,
                                            hier_local_knn_arr_single);
-//                        cout<<" kNNs queryss stop!"<<endl;
                         if(can_estimate) {
                             gettimeofday(&end, NULL);
                         }
@@ -452,8 +449,8 @@ public:
                             estimate_mutex.unlock();
 
                         }
-                            long processing_time =
-                                    (end.tv_sec - init.tv_sec) * MICROSEC_PER_SEC + end.tv_usec - init.tv_usec;
+                        long processing_time =
+                                (end.tv_sec - init.tv_sec) * MICROSEC_PER_SEC + end.tv_usec - init.tv_usec;
                         long current_time =
                                 (end.tv_sec - global_start.tv_sec) * MICROSEC_PER_SEC + end.tv_usec - global_start.tv_usec;
 
@@ -464,7 +461,7 @@ public:
 //                        query_time_list.push_back(processing_time);
                         number_of_query_processings++;
                         update_time_mutex.unlock();
-                            last_query_cost = processing_time;
+                        last_query_cost = processing_time;
 
                     }
                     if (multiTestPara.is_thresholded) {
@@ -477,9 +474,9 @@ public:
                         }
                     }
 //                    if(multiTestPara.num_threads_update>1) {
-                        pair<int, vector<KNode> > partial_res = make_pair(query_id, kNNs);
-                        query_id = (query_id + 1) % QUERY_ID_FOLD;
-                        aggregate_thread->add_task(_task_time, partial_res);
+                    pair<int, vector<KNode> > partial_res = make_pair(query_id, kNNs);
+                    query_id = (query_id + 1) % QUERY_ID_FOLD;
+                    aggregate_thread->add_task(_task_time, partial_res);
 //                    }
 //                    else{
 //                        gettimeofday(&end, NULL);
@@ -498,12 +495,11 @@ public:
 //                    cout<<"aggregate task added!"<<endl;
 
                     // put partial querying result to somewhere
-//                    cout<<" kNNs query stop!"<<endl;
                 }
 //                cout<<"method name: "<<multiTestPara.method_name<<endl;
                 if (_taskid.second == INSERT) {
 //                    cout<<"insert "<<_taskid.first<<endl;
-//                    cout<<"Insert start! ";
+
                     if(can_estimate) {
                         gettimeofday(&init, NULL);
                     }
@@ -513,11 +509,10 @@ public:
                         estimate_mutex.unlock();
 
                     }
-//                    cout<<"Insert start! ";
+
                     HandleInsert(copy_id, thread_id, multiTestPara.method_name, k, _taskid.first, dijkstra_object_map,
                                  mems,
                                  hier_local_knn_arr_single);
-//                    cout<<"Insert stop! "<<endl;
                     if(can_estimate) {
                         gettimeofday(&end, NULL);
                     }
@@ -543,11 +538,10 @@ public:
                         }
 //                        last_insert_cost = processing_time;
                     }
-//                    cout<<"Insert stop! "<<endl;
+
 
                 }
                 if (_taskid.second == DELETE) {
-//                    cout<<"Delete start! ";
 //                    cout<<"delete "<<_taskid.first<<endl;//
 
                     if(can_estimate) {
@@ -559,10 +553,8 @@ public:
                         estimate_mutex.unlock();
 
                     }
-//                    cout<<"Delete start! ";
                     HandleDelete(copy_id, thread_id, multiTestPara.method_name, k, _taskid.first, dijkstra_object_map,
                                  mems, hier_local_knn_arr_single);
-//                    cout<<"Delete stop! ";
                     if(can_estimate) {
                         gettimeofday(&end, NULL);
                     }
@@ -588,10 +580,9 @@ public:
                         // need lock
 //                        last_delete_cost = processing_time;
                     }
-//                    cout<<"Delete stop! ";
 
                 }
-               // cout<<" task stop! "<<endl;
+
                 thread_mutex.lock();
                 if(_taskid.second == QUERY){
                     num_queries_in_queue--;
@@ -649,7 +640,7 @@ public:
 
                 break;
             }
-//            cout<<"task stop! ";
+
         }
 //        cout << endl << endl << "out 2" << endl;
     }
@@ -705,12 +696,12 @@ public:
         begin_node = begin_node_val;
         end_node = end_node_val;
         simulation_time = simulation_time_val;
-        num_threads_query=num_threads_query_val; //replication
+        num_threads_query=num_threads_query_val;
         query_rate = query_rate_val;
         insert_rate = insert_rate_val;
         delete_rate = delete_rate_val;
         test_n = test_n_val;
-        num_threads_update = num_threads_update_val; //partition
+        num_threads_update = num_threads_update_val;
         alpha = alpha_val;
         fail_p = fail_p_val;
         k = k_val;
@@ -774,7 +765,7 @@ public:
         if(multiTestPara.is_single_aggregate){
             _single_aggregate_thread->join();
         }
-        cout << "finish joining aggregatethreads" << endl; //block threads
+        cout << "finish joining aggregatethreads" << endl;
 
 
 
@@ -838,7 +829,7 @@ public:
         vector<int> arrival_node_list;
         for (int i = begin; i < end; i++) {
 //            if(vStart[i])
-                non_object_list.push_back(i);
+            non_object_list.push_back(i);
         }
 
         for(int i = 0;i<full_list.size();i++){
@@ -985,7 +976,6 @@ public:
         if(multiTestPara.method_name.compare("vtree")==0 && network_name.compare("BJ-old")==0){
             need_opt=1;
         }
-        //init objects insert
         int i;
         for(i=0;i<init_objects;i++){
 
@@ -1030,7 +1020,6 @@ public:
             }
 
         }
-
         if(can_estimate)
             gettimeofday(&global_start, NULL);
         else{
@@ -1051,7 +1040,6 @@ public:
         }
 
         for (; i < full_list.size(); i++) {
-            cout<<"start ";
             if(overload_flag) break;
 //            cout<<i<<endl;
             if(arrival_nodes[i]==-1) continue;
@@ -1100,12 +1088,52 @@ public:
                 }
                 // start from queue id $start_q_id, we list num_queues_selected consecutive queues to hold random updates
             }
+//            cout<<"get here"<<endl;
+//            if(!VERIFY) {
+//                long current_time;
+////                do {
+//                    gettimeofday(&end, NULL);
+//                    current_time =
+//                            (end.tv_sec - global_start.tv_sec) * MICROSEC_PER_SEC + end.tv_usec - global_start.tv_usec;
+//                    if (issue_time <= current_time) {
+//                        if(event.second==QUERY) {
+//                            cout << "current time >= issue time" << endl;
+//                            cout << "current time: " << current_time << endl;
+//                            cout << "issue time : " << issue_time << endl;
+//                        }
+//                    }
+//                    else std::this_thread::sleep_for(std::chrono::microseconds(issue_time-current_time));
+////                } while (true);
+//                // start from queue id $start_q_id, we list num_queues_selected consecutive queues to hold random updates
+//                if(i<init_objects){
+//                    issue_time = current_time;
+//                }
+//                if(i==init_objects){
+//                    gettimeofday(&global_start, NULL);
+//
+//                }
+//            }
 
 
-            cout<<"event "<<event.second;
             // if insert
             if (event.second == INSERT) {
 
+
+
+
+//                long start_1 = clock();
+//                int index = global_random_numbers[rand_idx_update] % non_object_list.size();
+//                rand_idx_update=(rand_idx_update+1)%rand_length+rand_length;
+//                int non_object_node = non_object_list[index];
+//                int last_index = non_object_list.size() - 1;
+//
+//                int tmp = non_object_list[index];
+//                non_object_list[index] = non_object_list[last_index];
+//                non_object_list[last_index] = tmp;
+//                non_object_list.pop_back();
+//
+//                object_list.push_back(non_object_node);
+//                cout<<"INSERT "<< endl;
                 int non_object_node = arrival_nodes[i];
 
                 if(need_opt){
@@ -1158,8 +1186,20 @@ public:
 //                cout<<"end insert"<<endl;
             }
             if (event.second == DELETE) {
-//                cout<<"delete 1 ";
 
+
+//                long start_1 = clock();
+//                int index = global_random_numbers[rand_idx_update] % object_list.size();
+//                rand_idx_update=(rand_idx_update+1)%rand_length;
+//                int object_node = object_list[index];
+//                int last_index = object_list.size() - 1;
+//                int tmp = object_list[index];
+//                object_list[index] = object_list[last_index];
+//                object_list[last_index] = tmp;
+//                object_list.pop_back();
+//
+//                non_object_list.push_back(object_node);
+//                cout<<"DELETE "<<endl;
                 int object_node = arrival_nodes[i];
                 if(need_opt){
                     object_node%=1270000;
@@ -1179,7 +1219,7 @@ public:
 //                    car_nodes[object_node]=0;
                     DijkstraKNNDelete(object_node, car_nodes);
                 }
-//                cout<<" deleted ";
+
 //                cout<<"delete assign cost: "<<clock()-start_1<<endl;
 
             }
@@ -1218,6 +1258,7 @@ public:
                     vector<KNode> result = DijkstraKNNQuery(k, query_node, mems.dist,
                                                             mems.visited, mems.q, car_nodes);
                     verify_results.push_back(result);
+
                 }
                 // put to query tasks
 //                gettimeofday(&end, NULL);
@@ -1229,19 +1270,19 @@ public:
                     pair<long, pair<int, int> > task = std::make_pair(issue_time, node_type_pair);
 //                    cout<<"query added to "<<current_query_threads * num_threads_update + j<<endl;
                     if(multiTestPara.method_name.compare("dijk")!=0) {
-                    int use_thread_id=-1;
-                    long min_cost = INT_MAX;
-                    for(int u = current_query_threads;u < current_query_threads+num_threads_query; u++) {
-                        int u_mod = u % num_threads_query;
-                        long est_cost = _pool[u_mod * num_threads_update + j]->get_est_cost();
-                        if(min_cost>est_cost){
-                            min_cost = est_cost;
-                            use_thread_id = u_mod;
+                        int use_thread_id=-1;
+                        long min_cost = INT_MAX;
+                        for(int u = current_query_threads;u < current_query_threads+num_threads_query; u++) {
+                            int u_mod = u % num_threads_query;
+                            long est_cost = _pool[u_mod * num_threads_update + j]->get_est_cost();
+                            if(min_cost>est_cost){
+                                min_cost = est_cost;
+                                use_thread_id = u_mod;
+                            }
+
                         }
 
-                    }
-
-                    _pool[use_thread_id * num_threads_update + j]->add_task(task);
+                        _pool[use_thread_id * num_threads_update + j]->add_task(task);
                     }
                     else
                         _pool[current_query_threads * num_threads_update + j]->add_task(task);
@@ -1251,6 +1292,7 @@ public:
                 current_query_threads=(current_query_threads+1)%num_threads_query;
 //                cout<<"query assign cost: "<<clock()-start_1<<endl;
             }
+
 //            if (i%1000 == 0)
 //            {
 //                cout<<endl<<"i:"<<i<<endl;
@@ -1266,7 +1308,7 @@ public:
 //                    }
 //                }
 //            }
-            cout<<"stop!"<<endl;
+
         }
         while(globalThreadVar[0]->number_of_queries<2){
             std::this_thread::sleep_for(std::chrono::microseconds(1));
@@ -1293,11 +1335,13 @@ public:
         for (int i = 0; i < _pool.size(); i++) {
             _pool[i]->set_stop();
             _pool[i]->notify();
+
         }
         if(!multiTestPara.is_single_aggregate) {
             for (int j = 0; j < num_threads_query; j++) {
                 _aggregate_thread[j]->set_stop();
                 _aggregate_thread[j]->notify();
+
             }
         }
         if(multiTestPara.is_single_aggregate){
