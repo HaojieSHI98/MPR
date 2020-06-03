@@ -1051,7 +1051,7 @@ public:
         }
 
         for (; i < full_list.size(); i++) {
-//            cout<<"start ";
+            cout<<"start ";
             if(overload_flag) break;
 //            cout<<i<<endl;
             if(arrival_nodes[i]==-1) continue;
@@ -1102,7 +1102,7 @@ public:
             }
 
 
-//            cout<<"event "<<event.second;
+            cout<<"event "<<event.second;
             // if insert
             if (event.second == INSERT) {
 
@@ -1266,7 +1266,7 @@ public:
 //                    }
 //                }
 //            }
-//            cout<<"stop!"<<endl;
+            cout<<"stop!"<<endl;
         }
         while(globalThreadVar[0]->number_of_queries<2){
             std::this_thread::sleep_for(std::chrono::microseconds(1));
