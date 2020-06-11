@@ -274,9 +274,9 @@ public:
         num_queries_in_queue=0;
         num_inserts_in_queue=0;
         num_deletes_in_queue=0;
-        last_query_cost=0;
-        last_insert_cost=0;
-        last_delete_cost=0;
+        last_query_cost=1;
+        last_insert_cost=1;
+        last_delete_cost=1;
         last_query_response_time=0;
 
         working_thread = std::thread(&RandomThread::run, this);
