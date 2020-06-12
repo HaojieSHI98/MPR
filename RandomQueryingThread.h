@@ -278,6 +278,7 @@ public:
         last_insert_cost=0;
         last_delete_cost=0;
         last_query_response_time=0;
+        cout<<"query_lost:"<<last_query_cost<<"insert_lost:"<<last_insert_cost<<"delete_lost:"<<last_delete_cost<<endl;
 
         working_thread = std::thread(&RandomThread::run, this);
         // working_thread.detach(); //放到后台， join是等待线程结束
