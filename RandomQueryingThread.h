@@ -962,8 +962,16 @@ public:
         vector<std::pair<double, int> > append_list = make_online_query_update_list(query_rate, insert_rate,
                                                                                     delete_rate,
                                                                                     simulation_time);
-        for (pair<double, int> &item : append_list)
-            full_list.push_back(item);
+
+//        std::ofstream queryfile;
+//        queryfile.open(input_parameters.input_data_dir + "query_time_" +std::to_string(simulation_time)+".txt", std::ios_base::out);
+//        for (pair<double, int> &item : append_list)
+//        {
+//            full_list.push_back(item);
+//            queryfile<<item.first<<" "<<item.second<<endl;
+//        }
+//        queryfile.close();
+
 
         vector<int> arrival_nodes = generate_arrival_nodes(full_list, begin_node, end_node);
         cout << "full_list made..." << endl;
@@ -1287,21 +1295,21 @@ public:
                 current_query_threads=(current_query_threads+1)%num_threads_query;
 //                cout<<"query assign cost: "<<clock()-start_1<<endl;
             }
-//           if (i%1000 == 0)
-//           {
-//               cout<<endl<<"i:"<<i<<endl;
-//               for(int z = 0;z < num_threads_query;z++)
-//               {
-//                   for(int q_id = 0;q_id <num_threads_update;q_id++)
-//                   {
-//                       int pool_index=z * num_threads_update + q_id;
-//                       int num_queries = _pool[pool_index]->get_num_queries_in_queue();
-//                       int num_inserts = _pool[pool_index]->get_num_inserts_in_queue();
-//                       int num_deletes = _pool[pool_index]->get_num_deletes_in_queue();
-//                       cout<<"query:"<<z<<" update:"<<q_id<<" queries:"<<num_queries<<" inserts:"<<num_inserts<<" deletes:"<<num_deletes<<endl;
-//                   }
-//               }
-//           }
+           if (i%1000 == 0)
+           {
+               cout<<endl<<"i:"<<i<<endl;
+               for(int z = 0;z < num_threads_query;z++)
+               {
+                   for(int q_id = 0;q_id <num_threads_update;q_id++)
+                   {
+                       int pool_index=z * num_threads_update + q_id;
+                       int num_queries = _pool[pool_index]->get_num_queries_in_queue();
+                       int num_inserts = _pool[pool_index]->get_num_inserts_in_queue();
+                       int num_deletes = _pool[pool_index]->get_num_deletes_in_queue();
+                       cout<<"query:"<<z<<" update:"<<q_id<<" queries:"<<num_queries<<" inserts:"<<num_inserts<<" deletes:"<<num_deletes<<endl;
+                   }
+               }
+           }
 
         }
         while(globalThreadVar[0]->number_of_queries<2){
