@@ -965,11 +965,11 @@ public:
 
 //        std::ofstream queryfile;
 //        queryfile.open(input_parameters.input_data_dir + "query_time_" +std::to_string(simulation_time)+".txt", std::ios_base::out);
-//        for (pair<double, int> &item : append_list)
-//        {
-//            full_list.push_back(item);
+        for (pair<double, int> &item : append_list)
+        {
+            full_list.push_back(item);
 //            queryfile<<item.first<<" "<<item.second<<endl;
-//        }
+        }
 //        queryfile.close();
 
 
