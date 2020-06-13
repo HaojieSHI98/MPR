@@ -990,6 +990,7 @@ public:
         }
         int i;
         for(i=0;i<init_objects;i++){
+            cout<<i<<endl;
 
             if(can_estimate)
                 gettimeofday(&end, NULL);
@@ -1053,7 +1054,7 @@ public:
 
         for (; i < full_list.size(); i++) {
             if(overload_flag) break;
-//            cout<<i<<endl;
+            cout<<i<<endl;
             if(arrival_nodes[i]==-1) continue;
             pair<double, int> &event = full_list[i];
             long issue_time = floor(event.first * MICROSEC_PER_SEC);
