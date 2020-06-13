@@ -989,6 +989,7 @@ public:
             need_opt=1;
         }
         int i;
+        cout<<"init:"<<init_objects<<endl;
         for(i=0;i<init_objects;i++){
             cout<<i<<endl;
 
@@ -1054,7 +1055,7 @@ public:
 
         for (; i < full_list.size(); i++) {
             if(overload_flag) break;
-            cout<<i<<endl;
+//            cout<<i<<endl;
             if(arrival_nodes[i]==-1) continue;
             pair<double, int> &event = full_list[i];
             long issue_time = floor(event.first * MICROSEC_PER_SEC);
@@ -1298,7 +1299,7 @@ public:
             }
            if (i%1000 == 0)
            {
-               cout<<endl<<"i:"<<i<<endl;
+               cout<<"i:"<<i<<endl;
                for(int z = 0;z < num_threads_query;z++)
                {
                    for(int q_id = 0;q_id <num_threads_update;q_id++)
