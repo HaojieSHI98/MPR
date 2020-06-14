@@ -959,19 +959,32 @@ public:
         for (int i = 0; i < init_objects; i++) {
             full_list.push_back(make_pair(0.0, INSERT));
         }
-        vector<std::pair<double, int> > append_list = make_online_query_update_list(query_rate, insert_rate,
-                                                                                    delete_rate,
-                                                                                    simulation_time);
+        // vector<std::pair<double, int> > append_list = make_online_query_update_list(query_rate, insert_rate,
+        //                                                                             delete_rate,
+        //                                                                             simulation_time);
 
-        std::ofstream queryfile;
-        queryfile.open(input_parameters.input_data_dir + "query_time_" +std::to_string(simulation_time)+".txt", std::ios_base::out);
-        for (pair<double, int> &item : append_list)
+        std::ifstream queryfile;
+        queryfile.open(input_parameters.input_data_dir + "query_time_" +std::to_string(simulation_time)+".txt", std::ios_base::in);
+        string s;
+        double f1;
+        int f2;
+        while(getline(queryfile,s))
         {
-            full_list.push_back(item);
-            queryfile<<item.first<<" "<<item.second<<endl;
+            s>>f1>>f2;
+            cout<<f1<<" "<<f2<<endl;
+            full_list.push_back(make_pair(f1,f2));
         }
         queryfile.close();
-        cout<<"write to queryfile!"<<endl;
+        cout<<"read from queryfile!"<<endl;
+//        std::ofstream queryfile;
+//        queryfile.open(input_parameters.input_data_dir + "query_time_" +std::to_string(simulation_time)+".txt", std::ios_base::out);
+//         for (pair<double, int> &item : append_list)
+//         {
+//             full_list.push_back(item);
+// //            queryfile<<item.first<<" "<<item.second<<endl;
+//         }
+//        queryfile.close();
+//        cout<<"write to queryfile!"<<endl;
 
 
         vector<int> arrival_nodes = generate_arrival_nodes(full_list, begin_node, end_node);
