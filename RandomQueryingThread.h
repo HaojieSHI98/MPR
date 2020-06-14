@@ -274,7 +274,7 @@ public:
         num_queries_in_queue=0;
         num_inserts_in_queue=0;
         num_deletes_in_queue=0;
-        last_query_cost=1;
+        last_query_cost=0;
         last_insert_cost=0;
         last_delete_cost=0;
         last_query_response_time=0;
@@ -963,14 +963,15 @@ public:
                                                                                     delete_rate,
                                                                                     simulation_time);
 
-//        std::ofstream queryfile;
-//        queryfile.open(input_parameters.input_data_dir + "query_time_" +std::to_string(simulation_time)+".txt", std::ios_base::out);
+        std::ofstream queryfile;
+        queryfile.open(input_parameters.input_data_dir + "query_time_" +std::to_string(simulation_time)+".txt", std::ios_base::out);
         for (pair<double, int> &item : append_list)
         {
             full_list.push_back(item);
-//            queryfile<<item.first<<" "<<item.second<<endl;
+            queryfile<<item.first<<" "<<item.second<<endl;
         }
-//        queryfile.close();
+        queryfile.close();
+        cout<<"write to queryfile!"<<endl;
 
 
         vector<int> arrival_nodes = generate_arrival_nodes(full_list, begin_node, end_node);
