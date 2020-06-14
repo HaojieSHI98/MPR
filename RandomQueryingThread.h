@@ -974,7 +974,7 @@ public:
         while(!queryfile.eof())
         {
             queryfile>>f1>>f2;
-            cout<<f1<<" "<<f2<<endl;
+            // cout<<f1<<" "<<f2<<endl;
             full_list.push_back(make_pair(f1,f2));
         }
         queryfile.close();
