@@ -965,12 +965,15 @@ public:
 
         std::ifstream queryfile;
         queryfile.open(input_parameters.input_data_dir + "query_time_" +std::to_string(simulation_time)+".txt", std::ios_base::in);
-        string s;
         double f1;
         int f2;
-        while(getline(queryfile,s))
+        if(!queryfile.is_open())
         {
-            s>>f1>>f2;
+            cout<<"can't load queryfile!"<<endl;
+        }
+        while(!queryfile.eof())
+        {
+            queryfile>>f1>>f2;
             cout<<f1<<" "<<f2<<endl;
             full_list.push_back(make_pair(f1,f2));
         }
