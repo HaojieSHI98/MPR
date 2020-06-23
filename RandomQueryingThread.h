@@ -1008,7 +1008,7 @@ public:
         }
         while(!nodefile.eof())
         {
-            queryfile>>f3;
+            nodefile>>f3;
             cout<<f3<<endl;
             arrival_nodes.push_back(f3);
         }
