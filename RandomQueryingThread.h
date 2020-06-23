@@ -991,6 +991,15 @@ public:
 
 
         vector<int> arrival_nodes = generate_arrival_nodes(full_list, begin_node, end_node);
+        std::ofstream nodesfile;
+        nodesfile.open(input_parameters.input_data_dir + "query_nodes" +std::to_string(simulation_time)+".txt", std::ios_base::out);
+         for (int node_i=0;node_i<arrival_nodes.size();node_i++)
+         {
+//             full_list.push_back(item);
+             nodesfile<<arrival_nodes[node_i]<<endl;
+         }
+        nodesfile.close();
+        cout<<"write to nodefile!"<<endl;
         cout << "full_list made..." << endl;
         cout << "full list size: " << full_list.size() << endl;
         double last_time = 0.0;
