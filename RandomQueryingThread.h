@@ -989,17 +989,33 @@ public:
 //        queryfile.close();
 //        cout<<"write to queryfile!"<<endl;
 
+        vector<int> arrival_nodes;
+//        vector<int> arrival_nodes = generate_arrival_nodes(full_list, begin_node, end_node);
+//        std::ofstream nodesfile;
+//        nodesfile.open(input_parameters.input_data_dir + "query_nodes" +std::to_string(simulation_time)+".txt", std::ios_base::out);
+//         for (int node_i=0;node_i<arrival_nodes.size();node_i++)
+//         {
+////             full_list.push_back(item);
+//             nodesfile<<arrival_nodes[node_i]<<endl;
+//         }
+//        nodesfile.close();
+        std::ifstream nodefile;
+        nodefile.open(input_parameters.input_data_dir + "query_nodes" +std::to_string(simulation_time)+".txt", std::ios_base::in);
+        int f3;
+        if(!nodefile.is_open())
+        {
+            cout<<"can't load nodefile!"<<endl;
+        }
+        while(!nodefile.eof())
+        {
+            queryfile>>f3;
+            cout<<f3<<endl;
+            arrival_nodes.push_back(f3);
+        }
+        nodefile.close();
+        cout<<"read from nodefile!"<<endl;
 
-        vector<int> arrival_nodes = generate_arrival_nodes(full_list, begin_node, end_node);
-        std::ofstream nodesfile;
-        nodesfile.open(input_parameters.input_data_dir + "query_nodes" +std::to_string(simulation_time)+".txt", std::ios_base::out);
-         for (int node_i=0;node_i<arrival_nodes.size();node_i++)
-         {
-//             full_list.push_back(item);
-             nodesfile<<arrival_nodes[node_i]<<endl;
-         }
-        nodesfile.close();
-        cout<<"write to nodefile!"<<endl;
+//        cout<<"write to nodefile!"<<endl;
         cout << "full_list made..." << endl;
         cout << "full list size: " << full_list.size() << endl;
         double last_time = 0.0;
