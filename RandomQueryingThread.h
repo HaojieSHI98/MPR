@@ -246,9 +246,9 @@ private:
     std::condition_variable cv;
     timeval end;
     vector<KNode>* hier_local_knn_arr_single;
-    long last_query_cost;
-    long last_insert_cost;
-    long last_delete_cost;
+    int last_query_cost;
+    int last_insert_cost;
+    int last_delete_cost;
     long last_query_response_time;
     int num_queries_in_queue;
     int num_inserts_in_queue;
@@ -258,7 +258,7 @@ private:
 public:
 
     //构造
-    RandomThread(int copy_id_val, int id, int k_val, RandomAggregateThread *aggregate_thread_val) : thread_id(id), is_free(true),
+    RandomThread(int copy_id_val, int id, int k_val,int query_cost,int insert_cost,int delete_cost, RandomAggregateThread *aggregate_thread_val) : thread_id(id), is_free(true),
                                                                                                     thread_stop(0) {
         copy_id = copy_id_val;
         k = k_val;
@@ -274,9 +274,9 @@ public:
         num_queries_in_queue=0;
         num_inserts_in_queue=0;
         num_deletes_in_queue=0;
-        last_query_cost=0;
-        last_insert_cost=0;
-        last_delete_cost=0;
+        last_query_cost=query_cost;
+        last_insert_cost=insert_cost;
+        last_delete_cost=delete_cost;
         last_query_response_time=0;
         cout<<"query_lost:"<<last_query_cost<<"insert_lost:"<<last_insert_cost<<"delete_lost:"<<last_delete_cost<<endl;
 
@@ -688,7 +688,7 @@ private:
 //    vector<int *> dijkstra_object_map_vec;
 public:
     RandomThreadPool(int threadpool_id_val, int begin_node_val, int end_node_val, int num_threads_query_val, int num_threads_update_val, double alpha_val, int k_val, double fail_p_val,
-                     int test_n_val, double query_rate_val, double insert_rate_val, double delete_rate_val, int simulation_time_val) {
+                     int test_n_val, double query_rate_val, double insert_rate_val, double delete_rate_val, int simulation_time_val,int query_cost,int insert_cost,int delete_cost) {
         cout << "constructing RandomThreadPool..." << endl;
         if(overload_flag)
             overload_flag=0;
@@ -730,11 +730,11 @@ public:
                 _aggregate_thread[j] = new RandomAggregateThread(j, k, num_threads_update);
             for(int i=0;i<num_threads_update;i++) {
                 if(!multiTestPara.is_single_aggregate) {
-                    RandomThread *t = new RandomThread(j, i, k_star, _aggregate_thread[j]);
+                    RandomThread *t = new RandomThread(j, i, k_star,query_cost,insert_cost,delete_cost, _aggregate_thread[j]);
                     _pool.push_back(t);
                 }
                 else{
-                    RandomThread *t = new RandomThread(j, i, k_star, _single_aggregate_thread);
+                    RandomThread *t = new RandomThread(j, i, k_star,query_cost,insert_cost,delete_cost, _single_aggregate_thread);
                     _pool.push_back(t);
                 }
             }
