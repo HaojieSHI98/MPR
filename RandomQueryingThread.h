@@ -1009,7 +1009,7 @@ public:
         while(!nodefile.eof())
         {
             nodefile>>f3;
-            cout<<f3<<endl;
+//            cout<<f3<<endl;
             arrival_nodes.push_back(f3);
         }
         nodefile.close();
